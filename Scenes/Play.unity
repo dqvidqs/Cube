@@ -739,13 +739,12 @@ MonoBehaviour:
   poolSize: 0
   shiftSpeed: 0
   spawnRate: 0
-  ySpawnRange:
-    minY: 0
-    maxY: 0
   defaultSpawnPos: {x: 0, y: 0, z: 0}
+  coefficientDispose: 0
   spawnImmediate: 0
   immediateSpawnPos: {x: 0, y: 0, z: 0}
   targetAspectRatio: {x: 0, y: 0}
+  Now: 0
 --- !u!1 &682154188
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 682154190}
   - component: {fileID: 682154189}
+  - component: {fileID: 682154191}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -870,6 +870,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &682154191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 682154188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4456808a617d74c9329561abf2c2af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &694529163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1155,16 +1166,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 2031486615}
-  poolSize: 8
+  poolSize: 2
   shiftSpeed: 2
-  spawnRate: 2.5
-  ySpawnRange:
-    minY: 0
-    maxY: 0
-  defaultSpawnPos: {x: 2.28, y: -5, z: 0}
+  spawnRate: 0.1
+  defaultSpawnPos: {x: 12, y: -5, z: 0}
+  coefficientDispose: -11
   spawnImmediate: 1
   immediateSpawnPos: {x: 2.28, y: -5, z: 0}
   targetAspectRatio: {x: 9, y: 16}
+  Now: 1
 --- !u!4 &888164729
 Transform:
   m_ObjectHideFlags: 0
@@ -1219,16 +1229,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1810034315}
-  poolSize: 5
+  poolSize: 3
   shiftSpeed: 2
   spawnRate: 2
-  ySpawnRange:
-    minY: 0
-    maxY: 0
   defaultSpawnPos: {x: 1, y: 0, z: 133}
+  coefficientDispose: -6
   spawnImmediate: 0
   immediateSpawnPos: {x: 0, y: 0, z: 0}
   targetAspectRatio: {x: 9, y: 16}
+  Now: 0
 --- !u!1 &1047418064
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,16 +1266,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Prefab: {fileID: 1351089003}
-  poolSize: 1
-  shiftSpeed: 0.1
-  spawnRate: 7.5
-  ySpawnRange:
-    minY: 0
-    maxY: 0
-  defaultSpawnPos: {x: 0, y: 0, z: 0}
+  poolSize: 2
+  shiftSpeed: 1
+  spawnRate: 0.1
+  defaultSpawnPos: {x: 12, y: 0, z: 0}
+  coefficientDispose: -12
   spawnImmediate: 1
   immediateSpawnPos: {x: 0, y: 0, z: 0}
   targetAspectRatio: {x: 9, y: 16}
+  Now: 1
 --- !u!4 &1047418066
 Transform:
   m_ObjectHideFlags: 0
@@ -1607,7 +1615,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1351089003}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.61, y: 0, z: -488.71094}
+  m_LocalPosition: {x: 12.32, y: 10.78, z: -488.71094}
   m_LocalScale: {x: 0.61, y: 0.61, z: 0.61}
   m_Children: []
   m_Father: {fileID: 2119434273}
@@ -1648,7 +1656,7 @@ SpriteRenderer:
   m_SortingLayerID: 2016453037
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c09aa75a18ad40643a80b3b09d022060, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f8160c26b65072479f65141d98cedc3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2183,6 +2191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831477876}
   - component: {fileID: 1831477878}
+  - component: {fileID: 1831477879}
   - component: {fileID: 1831477877}
   m_Layer: 5
   m_Name: BestScore
@@ -2249,6 +2258,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1831477875}
   m_CullTransparentMesh: 0
+--- !u!114 &1831477879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1831477875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0215970ba2617724ca8ab5cd61f692da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1920072731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2461,8 +2481,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2031486615}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.05, y: -5.62, z: -488.71094}
-  m_LocalScale: {x: 1.191, y: 1, z: 1}
+  m_LocalPosition: {x: 11.676, y: -5.62, z: -488.71094}
+  m_LocalScale: {x: 3.1161232, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2119434273}
   m_RootOrder: 3
