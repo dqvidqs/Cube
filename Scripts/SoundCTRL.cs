@@ -12,12 +12,9 @@ public class SoundCTRL : MonoBehaviour {
 		coinSound = Resources.Load<AudioClip>("Coin");
 		deadSound = Resources.Load<AudioClip>("Dead");
 		source = GetComponent<AudioSource>();
+		source.volume = PlayerPrefs.GetFloat("EffectVolume");
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public static void PlaySound(string clip){
 		switch(clip){

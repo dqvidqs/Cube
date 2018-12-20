@@ -9,16 +9,16 @@ public class Parallaxer : MonoBehaviour
     {
         public Transform transform;
         public bool inUse;
-        public PoolObject(Transform t) { transform = t; }
-        public void Use() { inUse = true; }
-        public void Dispose() { inUse = false; }
-    }
 
-    [System.Serializable]
-    public struct YSpawnRange
-    {
-        public float minY;
-        public float maxY;
+        public PoolObject(Transform t) { 
+            transform = t;
+        }
+        public void Use() {
+            inUse = true; 
+        }
+        public void Dispose() { 
+            inUse = false;
+        }
     }
 
     public GameObject Prefab;
@@ -26,13 +26,15 @@ public class Parallaxer : MonoBehaviour
     public float shiftSpeed;
     public float spawnRate;
 
-    public YSpawnRange ySpawnRange;
     public Vector3 defaultSpawnPos;
+    public float coefficientDispose;
     public bool spawnImmediate;
     public Vector3 immediateSpawnPos;
     public Vector2 targetAspectRatio;
+    public bool Now;
     int t = 0;
-    float spawnTimer;
+    int next = 0;
+    float spawnTimer = 0;
     PoolObject[] poolObjects;
     float targetAspect;
     GameManager game;
@@ -45,10 +47,6 @@ public class Parallaxer : MonoBehaviour
     {
         game = GameManager.Instance;
     }
-    /*/void Start()
-    {
-        game = GameManager.Instance;
-    }*/
 
     void OnEnable()
     {
@@ -69,24 +67,33 @@ public class Parallaxer : MonoBehaviour
             poolObjects[i].Dispose();
             poolObjects[i].transform.position = Vector3.one * 1000;
         }
-        Configure();
+        if (spawnImmediate)
+        {
+            SpawnImmediate();
+        }
     }
 
     void Update()
-    {
-        if (game.GameOver) return;
+    {        
+        if(game!=null){
 
-        Shift();
-        spawnTimer += Time.deltaTime;
-        if (spawnTimer > spawnRate)
-        {
-            Spawn();
-            spawnTimer = 0;
+            if (game.GameOver) return;
             t++;
-            if(t > 5)
+            if(t > 600)
             {
-                shiftSpeed += (float)0.2;
+                shiftSpeed += shiftSpeed*(float)0.1;
                 t = 0;
+            }
+
+            Shift();
+            spawnTimer += Time.deltaTime;
+            if (spawnTimer > spawnRate && !Now)
+            {
+                Spawn();
+                spawnTimer = 0;
+            }
+            if(spawnTimer > spawnRate && Now){
+                Spawn_custome();
             }
         }
     }
@@ -108,6 +115,20 @@ public class Parallaxer : MonoBehaviour
         if (spawnImmediate)
         {
             SpawnImmediate();
+        }
+    }
+    void Spawn_custome()
+    {
+        if(!poolObjects[next % 2].inUse){
+        //moving pool objects into place
+            Transform t = GetPoolObject();
+            if (t == null) return;
+            Vector3 pos = Vector3.zero;
+            pos.y = 0 + defaultSpawnPos.y;// Random.Range(ySpawnRange.minY, ySpawnRange.maxY);
+            pos.x = 0 + defaultSpawnPos.x;// (defaultSpawnPos.x * Camera.main.aspect) / targetAspect;
+            pos.z = 0 + defaultSpawnPos.z;
+            t.position = pos;
+            next++;
         }
     }
 
@@ -132,7 +153,7 @@ public class Parallaxer : MonoBehaviour
         pos.x = 0 + defaultSpawnPos.x;
         pos.z = 0 + defaultSpawnPos.z;
         t.position = pos;
-        Spawn();
+        //Spawn();
     }
 
     void Shift()
@@ -149,9 +170,8 @@ public class Parallaxer : MonoBehaviour
 
     void CheckDisposeObject(PoolObject poolObject)
     {
-        //place objects off screen
-        //if (poolObject.transform.position.x < (-defaultSpawnPos.x * Camera.main.aspect) / targetAspect)
-        if (poolObject.transform.position.x < (-12 * Camera.main.aspect) / targetAspect)
+        //place objects off screen)
+        if (poolObject.transform.position.x < (coefficientDispose * Camera.main.aspect) / targetAspect)
         {
             poolObject.Dispose();
             poolObject.transform.position = Vector3.one * 1000;

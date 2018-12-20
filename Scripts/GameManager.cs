@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour {
     public static event GameDelegate OnGameOverConfirmed;
 
     public static GameManager Instance;
-
     public GameObject StarPage;
     public GameObject GameOverPage;
     public GameObject CountDownPage;
@@ -28,16 +27,41 @@ public class GameManager : MonoBehaviour {
     bool gameover = false;
     public bool GameOver { get { return gameover; } }
     void Awake()
-    {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
+    {       
+        
+        if(Instance == null) {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad (gameObject);
+        }else{
+            //DestroyImmediate(gameObject);
+            Instance = this;
         }
+        /*Instance = this;
+            GameObject go = GameObject.Find("GameStartPage");
+            if(go == null){
+                Debug.Log("go1 cant found");
+            }
+            else{
+                StarPage = go;
+                StarPage.SetActive(true);
+            }
+            go = GameObject.Find("GameOverPage");
+            if(go == null){
+                Debug.Log("go2 cant found");
+            }
+            else{
+                GameOverPage = go;
+                GameOverPage.SetActive(false);
+            }
+            go = GameObject.Find("CountDownPage");
+            if(go == null){
+                Debug.Log("go3 cant found");
+            }
+            else{
+                CountDownPage = go;
+                CountDownPage.SetActive(false);
+            }*/
+        
     }
     void OnEnable()
     {
@@ -55,13 +79,12 @@ public class GameManager : MonoBehaviour {
     {
         gameover = true;
         int savedScore = PlayerPrefs.GetInt("HighScore");
-        if(score> savedScore)
+        PlayerPrefs.SetInt("Score", score);
+        if(score > savedScore)
         {
             PlayerPrefs.SetInt("HighScore", score);
-
         }
         SetPageState(PageState.Over);
-
     }
     void OnPlayerScored()
     {
